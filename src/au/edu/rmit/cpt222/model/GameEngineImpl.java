@@ -29,7 +29,6 @@ public class GameEngineImpl implements GameEngine {
 	
 	public void addGameEngineCallback(GameEngineCallback gameEngineCallback) {
 		callbacks.add(gameEngineCallback);
-		
 	}
 	
 	public void addPlayer(Player player) {

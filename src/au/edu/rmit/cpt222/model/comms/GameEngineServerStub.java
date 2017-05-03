@@ -13,25 +13,38 @@ public class GameEngineServerStub {
 	private GameEngine engine = new GameEngineImpl();
 	
 	public GameEngineServerStub(int port) {
-		//open up server socket to listen for incoming client connections
+		// Open server socket to wait for client connections
 		try {
-			ServerSocket socket = new ServerSocket(port);
+			ServerSocket serverSocket = new ServerSocket(port);
 			
-			// Listen for closed connection
-			while(!socket.isClosed()) {
+			// Listen for connections
+			// TODO: see workshop 2 notes (52:00)
+			while(!serverSocket.isClosed()) {
+				System.out.println("Server on " + port + " waiting");
+				serverSocket.accept();
+				// THIS IS ONE OF THE KEY PARTS OF ASSIGNMENT
 				// create new thread for each new incoming client
 				// to process requests
 				// multi-thread implementation here
 					// at some point, accept client connections
-					// and deal with them: socket.accept();
+					// and deal with them: serverSocket.accept();
 						// .accept() is invoked once client connections start hitting
+
+				// all you have to is execute() for the commands sent through(??)
+					// the operation method, that is
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	}
+	
+	public void addGameEngineCallback(HostDetails details) {
+		engine.addGameEngineCallback(new ServerStubGameEngineCallback(details));
+	}
 
+	public GameEngine getEngine() {
+		return this.engine;
 	}
 
 }
