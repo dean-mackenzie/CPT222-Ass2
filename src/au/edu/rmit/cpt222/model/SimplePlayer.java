@@ -1,12 +1,14 @@
 
 package au.edu.rmit.cpt222.model;
 
+import java.io.Serializable;
+
 import au.edu.rmit.cpt222.model.exceptions.InsufficientFundsException;
 import au.edu.rmit.cpt222.model.interfaces.DicePair;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 
-public class SimplePlayer implements Player {
+public class SimplePlayer implements Player, Serializable {
 	private String playerID;
 	private String playerName;
 	private int points;

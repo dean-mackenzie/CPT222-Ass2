@@ -6,31 +6,23 @@ import java.io.ObjectOutputStream;
 import au.edu.rmit.cpt222.model.comms.GameEngineServerStub;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 
-public class AddPlayerOperation extends AbstractGameOperation {
+public class RemovePlayerOperation extends AbstractGameOperation {
 	
 	private Player player;
 
-	public AddPlayerOperation(Player player) {
+	public RemovePlayerOperation(Player player)	{
 		this.player = player;
 	}
 	
 	@Override
 	public void execute(GameEngineServerStub serverStub, 
 			ObjectOutputStream requestStream) {
-		// addPlayer() is a void method, so nothing to write back
-		serverStub.getEngine().addPlayer(this.player);
 		try {
-			requestStream.writeObject(true);
-					
+			requestStream.writeObject(
+					serverStub.getEngine().removePlayer(player));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-
-//	@Override
-//	public void execute(GameEngineServerStub serverStub, ObjectOutputStream requestStream) {
-//		serverStub.getEngine().addPlayer(this.player);
-//	}
 }
