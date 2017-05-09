@@ -19,7 +19,11 @@ public class GetAllPlayersOperation extends AbstractGameOperation {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+	}
+	
+	@Override
+	public String toString() {
+		return this.getClass().getName();
 	}
 
 }

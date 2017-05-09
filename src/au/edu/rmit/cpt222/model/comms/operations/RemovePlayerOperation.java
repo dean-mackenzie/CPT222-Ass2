@@ -25,4 +25,9 @@ public class RemovePlayerOperation extends AbstractGameOperation {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return this.getClass().getName();
+	}
 }

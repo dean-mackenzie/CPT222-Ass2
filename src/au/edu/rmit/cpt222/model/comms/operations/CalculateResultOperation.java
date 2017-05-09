@@ -4,22 +4,19 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import au.edu.rmit.cpt222.model.comms.GameEngineServerStub;
+import au.edu.rmit.cpt222.model.interfaces.Player;
 
-public class GetPlayerOperation extends AbstractGameOperation {
+public class CalculateResultOperation extends AbstractGameOperation {
 
-	private String playerId;
-	
-	public GetPlayerOperation(String playerId)
-	{
-		this.playerId = playerId;
-	}
+	public CalculateResultOperation() {}
 	
 	@Override
 	public void execute(GameEngineServerStub serverStub, 
 			ObjectOutputStream requestStream) {
+		serverStub.getEngine().calculateResult();
 		try {
-			requestStream.writeObject(
-					serverStub.getEngine().getPlayer(playerId));
+			// calculateResult() returns nothing, so just do a simple write back
+			requestStream.writeObject(true);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -30,5 +27,4 @@ public class GetPlayerOperation extends AbstractGameOperation {
 	public String toString() {
 		return this.getClass().getName();
 	}
-
 }

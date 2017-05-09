@@ -8,9 +8,12 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 
 import au.edu.rmit.cpt222.model.comms.operations.AddPlayerOperation;
+import au.edu.rmit.cpt222.model.comms.operations.CalculateResultOperation;
+import au.edu.rmit.cpt222.model.comms.operations.ConnectOperation;
 import au.edu.rmit.cpt222.model.comms.operations.GetAllPlayersOperation;
 import au.edu.rmit.cpt222.model.comms.operations.GetPlayerOperation;
 import au.edu.rmit.cpt222.model.comms.operations.RemovePlayerOperation;
+import au.edu.rmit.cpt222.model.comms.operations.RollPlayerOperation;
 import au.edu.rmit.cpt222.model.exceptions.InsufficientFundsException;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine;
 import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
@@ -54,8 +57,9 @@ public class GameEngineClientStub implements GameEngine {
 			e.printStackTrace();
 		}
 		
-		this.registerGECallbackServer(new HostDetails(
-				"localhost", this.callbackServer.getSocketPort()));
+		ConnectOperation op = new ConnectOperation(
+				"localhost", this.callbackServer.getSocketPort());
+		this.registerGECallbackServer(op);
 	}
 
 	// Controller instantiates this
@@ -66,11 +70,10 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public void addPlayer(Player player) {
-		System.out.println("Trying to add player...");
+		System.out.println("Adding player...");			// TODO: remove debug msg
 		try {
 			this.requestStream.writeObject(new AddPlayerOperation(player));
-			this.responseStream.readObject();
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -78,15 +81,21 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public void calculateResult() {
-		// TODO Auto-generated method stub
-		
-		// Add operations that corresponds to each method (as above)
-
+		System.out.println("Calculating result/rolling for house...");		
+		// TODO: remove debug msg
+		try {
+			this.requestStream.writeObject(new CalculateResultOperation());
+			this.responseStream.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Player> getAllPlayers() {
+		System.out.println("Getting players...");		// TODO: remove debug msg
 		Collection<Player> players = null;
 		try {
 			this.requestStream.writeObject(new GetAllPlayersOperation());
@@ -104,6 +113,7 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public Player getPlayer(String id) {
+		System.out.println("Getting player...");		// TODO: remove debug msg
 		Player player = null;
 		try {
 			this.requestStream.writeObject(new GetPlayerOperation(id));
@@ -123,18 +133,14 @@ public class GameEngineClientStub implements GameEngine {
 
 	}
 	
-	// Use commands instead of host details
-	public void registerGECallbackServer(HostDetails callbackServerDetails) {
+	public void registerGECallbackServer(ConnectOperation op) {
 		try {
-			this.requestStream.writeObject(callbackServerDetails);
+			this.requestStream.writeObject(op);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		// use ObjectOutputStream to send port number to server
 		// callbackServer.getSocketPort() to server stub
-		// other methods will work similarly
 	}
 
 	@Override
@@ -145,6 +151,7 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public boolean removePlayer(Player player) {
+		System.out.println("Removing player...");		// TODO: remove debug msg
 		boolean removed = false;
 		try {
 			this.requestStream.writeObject(new RemovePlayerOperation(player));
@@ -157,6 +164,7 @@ public class GameEngineClientStub implements GameEngine {
 	}
 
 
+	// DO I need this one?
 	@Override
 	public void rollHouse(int initialDelay, int finalDelay, int delayIncrement) {
 		// TODO Auto-generated method stub
@@ -164,10 +172,18 @@ public class GameEngineClientStub implements GameEngine {
 	}
 
 	@Override
-	public void rollPlayer(Player player, int initialDelay, int finalDelay, int delayIncrement) {
-		// TODO Auto-generated method stub
-		//this.requestStream.writeObject(...);
-
+	public void rollPlayer(Player player, int initialDelay, 
+			int finalDelay, int delayIncrement) {
+		System.out.println("Rolling for players...");		
+		// TODO: remove debug msg
+		try {
+			this.requestStream.writeObject(new RollPlayerOperation(
+					player, initialDelay, finalDelay, delayIncrement));
+			this.responseStream.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override

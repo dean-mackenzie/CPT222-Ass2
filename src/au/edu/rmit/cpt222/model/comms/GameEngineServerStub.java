@@ -65,7 +65,7 @@ public class GameEngineServerStub {
 			try {
 				GameOperation op = (GameOperation) this.responseStream.readObject();
 				op.execute(this, requestStream);
-				System.out.println("Operation executed.");
+				System.out.println("Operation executed: " + op.toString());
 			}
 			catch (ClassCastException | ClassNotFoundException e) {
 				// Thrown when client connects, which is OK (it's not an operation)
