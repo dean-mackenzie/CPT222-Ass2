@@ -19,13 +19,6 @@ public class AddPlayerOperation extends AbstractGameOperation {
 			ObjectOutputStream requestStream) {
 		// addPlayer() is a void method, so nothing to write back
 		serverStub.getEngine().addPlayer(this.player);
-//		try {
-//			requestStream.writeObject(true);
-//					
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 	}
 	
 	@Override

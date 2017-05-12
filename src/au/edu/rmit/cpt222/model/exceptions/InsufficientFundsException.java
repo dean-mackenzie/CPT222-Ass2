@@ -1,5 +1,7 @@
 package au.edu.rmit.cpt222.model.exceptions;
 
+import java.io.Serializable;
+
 /**
  * Custom Exception class to indicate that the player has insufficient funds
  * 
@@ -7,7 +9,7 @@ package au.edu.rmit.cpt222.model.exceptions;
  * 
  */
 @SuppressWarnings("serial")
-public class InsufficientFundsException extends Exception {
+public class InsufficientFundsException extends Exception implements Serializable {
 	/**
 	 * default constructor
 	 */

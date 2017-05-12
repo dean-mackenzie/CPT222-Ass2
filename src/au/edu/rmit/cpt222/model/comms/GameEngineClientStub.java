@@ -9,7 +9,7 @@ import java.util.Collection;
 
 import au.edu.rmit.cpt222.model.comms.operations.AddPlayerOperation;
 import au.edu.rmit.cpt222.model.comms.operations.CalculateResultOperation;
-import au.edu.rmit.cpt222.model.comms.operations.ConnectOperation;
+import au.edu.rmit.cpt222.model.comms.operations.RegisterCBOperation;
 import au.edu.rmit.cpt222.model.comms.operations.GetAllPlayersOperation;
 import au.edu.rmit.cpt222.model.comms.operations.GetPlayerOperation;
 import au.edu.rmit.cpt222.model.comms.operations.RemovePlayerOperation;
@@ -22,8 +22,6 @@ import au.edu.rmit.cpt222.model.interfaces.Player;
 public class GameEngineClientStub implements GameEngine {
 
 	// this is effectively the controller (local version of model)
-	// 
-
 	
 	private ObjectOutputStream requestStream;
 	private ObjectInputStream responseStream;
@@ -57,7 +55,7 @@ public class GameEngineClientStub implements GameEngine {
 			e.printStackTrace();
 		}
 		
-		ConnectOperation op = new ConnectOperation(
+		RegisterCBOperation op = new RegisterCBOperation(
 				"localhost", this.callbackServer.getSocketPort());
 		this.registerGECallbackServer(op);
 	}
@@ -133,7 +131,7 @@ public class GameEngineClientStub implements GameEngine {
 
 	}
 	
-	public void registerGECallbackServer(ConnectOperation op) {
+	public void registerGECallbackServer(RegisterCBOperation op) {
 		try {
 			this.requestStream.writeObject(op);
 		} catch (IOException e) {

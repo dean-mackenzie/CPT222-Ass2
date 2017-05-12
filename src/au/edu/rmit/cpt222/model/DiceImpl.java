@@ -1,10 +1,11 @@
 package au.edu.rmit.cpt222.model;
 
+import java.io.Serializable;
 import java.util.concurrent.ThreadLocalRandom;
 
 import au.edu.rmit.cpt222.model.interfaces.Dice;
 
-public class DiceImpl implements Dice  {
+public class DiceImpl implements Dice, Serializable  {
 	
 	private int face;
 	

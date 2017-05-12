@@ -1,9 +1,11 @@
 package au.edu.rmit.cpt222.model;
 
+import java.io.Serializable;
+
 import au.edu.rmit.cpt222.model.interfaces.Dice;
 import au.edu.rmit.cpt222.model.interfaces.DicePair;
 
-public class DicePairImpl implements DicePair {
+public class DicePairImpl implements DicePair, Serializable {
 	
 	//Variables
 	private Dice dice1;

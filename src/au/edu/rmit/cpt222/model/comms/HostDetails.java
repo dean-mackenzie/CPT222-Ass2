@@ -2,6 +2,7 @@ package au.edu.rmit.cpt222.model.comms;
 
 import java.io.Serializable;
 
+//TODO: do I need this now - see ConnectOperation (and rename it)
 public class HostDetails implements Serializable {
 	private String hostName;
 	private int port;

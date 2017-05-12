@@ -24,7 +24,6 @@ public class GameEngineServerStub {
 		try {
 			ServerSocket serverSocket = new ServerSocket(port);
 
-			// TODO: see workshop 2 notes (52:00)
 			System.out.println("Server on " + serverSocket.getLocalPort() + " / " + serverSocket.getLocalSocketAddress() + " waiting");
 
 			// set to timeout: serverSocket.setSoTimeout(0);
@@ -53,6 +52,7 @@ public class GameEngineServerStub {
 	public void handleRequest (Socket socket) throws IOException {
 		System.out.println("Connection accepted on " + socket.getPort());
 
+		// Set up streams for client/server communication
 		try {
 			this.requestStream = new ObjectOutputStream(socket.getOutputStream());
 			this.responseStream = new ObjectInputStream(socket.getInputStream());
@@ -61,6 +61,7 @@ public class GameEngineServerStub {
 			e.printStackTrace();
 		}
 
+		// Loop to handle multiple requests from client
 		while (!socket.isClosed()) {
 			try {
 				GameOperation op = (GameOperation) this.responseStream.readObject();
@@ -69,8 +70,7 @@ public class GameEngineServerStub {
 			}
 			catch (ClassCastException | ClassNotFoundException e) {
 				// Thrown when client connects, which is OK (it's not an operation)
-				;
-				System.out.println("ClassCastException thrown (should only be conn?)");
+				System.out.println("ClassCastException thrown");
 			}
 			catch (SocketException e) {
 				e.printStackTrace();

@@ -1,5 +1,6 @@
 package au.edu.rmit.cpt222.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +15,7 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 
 
-public class GameEngineImpl implements GameEngine {
+public class GameEngineImpl implements GameEngine, Serializable {
 	public static int INITIAL_DELAY;
 	public static int FINAL_DELAY;
 	public static int DELAY_INCREMENT;
