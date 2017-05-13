@@ -1,6 +1,6 @@
-CPT222 - Assignment 1
+CPT222 - Assignment 2
 
 Student Number: s3338283
-Student Name:
+Student Name: Dean Mackenzie
 
-Note: the dice images used were public domain
+Note: the dice images used were public domain.

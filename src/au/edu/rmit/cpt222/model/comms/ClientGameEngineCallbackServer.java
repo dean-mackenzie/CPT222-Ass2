@@ -2,14 +2,11 @@ package au.edu.rmit.cpt222.model.comms;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
 import au.edu.rmit.cpt222.model.comms.callback.operations.CallbackOperation;
-import au.edu.rmit.cpt222.model.comms.operations.GameOperation;
-import au.edu.rmit.cpt222.model.interfaces.GameEngine;
 import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
 
 public class ClientGameEngineCallbackServer {
@@ -37,11 +34,11 @@ public class ClientGameEngineCallbackServer {
 			public void run() {
 				try {
 					this.socket = new ServerSocket(socketPort);	
-					// when 0 used, JVM will utilise OS to find first avail port
 					ClientGameEngineCallbackServer.this.socketPort = 
 							socket.getLocalPort();
 					
-					System.out.println("Callback Server on " + socket.getLocalPort() + " / " + socket.getLocalSocketAddress() + " waiting");
+					System.out.println("Callback Server on " + socket.getLocalPort() + 
+							" / " + socket.getLocalSocketAddress() + " waiting");
 					
 					// Wait for server-side connections
 					clientSocket = this.socket.accept();
@@ -55,6 +52,8 @@ public class ClientGameEngineCallbackServer {
 					// Loop to handle multiple requests from client
 					while (!socket.isClosed()) {
 						try {
+							// This acts like server, executing callback methods
+							// Have to know which specific method to call
 							CallbackOperation op = 
 									(CallbackOperation) ClientGameEngineCallbackServer.this.inputStream.readObject();
 							op.execute(ClientGameEngineCallbackServer.this.callback);
@@ -69,13 +68,6 @@ public class ClientGameEngineCallbackServer {
 							socket.close();
 						}
 					}
-					
-					// This will have to act like server, executing callback methods
-					// Have to know which specific method to call
-					//example only - CHANGE
-//					ClientGameEngineCallbackServer.this.gameEngine
-//						.getCallback().houseRoll(dicepair,engine);
-
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

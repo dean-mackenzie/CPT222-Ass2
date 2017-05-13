@@ -1,6 +1,7 @@
 package au.edu.rmit.cpt222.model.comms;
 
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOperation;
+import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOutcomeOperation;
 import au.edu.rmit.cpt222.model.interfaces.DicePair;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
@@ -66,21 +68,28 @@ public class ServerStubGameEngineCallback implements GameEngineCallback, Seriali
 		System.out.println("Callback for player roll...");		
 		// TODO: remove debug msg
 		try {
-			// TODO: Check is for debug only
-			boolean bob = (new PlayerRollOperation(
-					player, dicePair, engine) instanceof Serializable);
-			this.requestStream.flush();
 			this.requestStream.writeObject(new PlayerRollOperation(
 					player, dicePair, engine));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			e.getMessage();
 			e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void playerRollOutcome(Player player, DicePair result, GameEngine engine) {
-		// TODO Auto-generated method stub
+		System.out.println("Callback for player roll outcome...");		
+		// TODO: remove debug msg
+		try {
+			// TODO: Check is for debug only
+			boolean bob = (new PlayerRollOutcomeOperation(
+					player, result, engine) instanceof Serializable);
+			this.requestStream.writeObject(new PlayerRollOutcomeOperation(
+					player, result, engine));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

@@ -16,8 +16,8 @@ public class GameEngineServerStub {
 	// use GameEngineImpl to perform all game functions
 	private GameEngine engine = new GameEngineImpl();
 	
-	private ObjectOutputStream requestStream;
-	private ObjectInputStream responseStream;
+	private ObjectOutputStream responseStream;
+	private ObjectInputStream requestStream;
 	
 	public GameEngineServerStub(int port) {
 		// Open server socket to wait for client connections
@@ -27,20 +27,13 @@ public class GameEngineServerStub {
 			System.out.println("Server on " + serverSocket.getLocalPort() + " / " + serverSocket.getLocalSocketAddress() + " waiting");
 
 			// set to timeout: serverSocket.setSoTimeout(0);
-				
-			// Handle requests sent
-			this.handleRequest(serverSocket.accept());
-				
-				// THIS IS ONE OF THE KEY PARTS OF ASSIGNMENT
-				// create new thread for each new incoming client
-				// to process requests
-				// multi-thread implementation here
-					// at some point, accept client connections
-					// and deal with them: serverSocket.accept();
-						// .accept() is invoked once client connections start hitting
+			
+			while (!serverSocket.isClosed()) {
+				new RequestTask (this, serverSocket.accept()).start();
+			}
 
-				// all you have to is execute() for the commands sent through(??)
-					// the operation method, that is
+			// TODO: old code, delete once multi-threading working
+			//this.handleRequest(serverSocket.accept());
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -49,13 +42,14 @@ public class GameEngineServerStub {
 		}
 	}
 	
+	// TODO: Superseded by RequestTask: delete once multi-threading working
 	public void handleRequest (Socket socket) throws IOException {
 		System.out.println("Connection accepted on " + socket.getPort());
 
 		// Set up streams for client/server communication
 		try {
-			this.requestStream = new ObjectOutputStream(socket.getOutputStream());
-			this.responseStream = new ObjectInputStream(socket.getInputStream());
+			this.responseStream = new ObjectOutputStream(socket.getOutputStream());
+			this.requestStream = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException e) {
 			System.out.println("IOException thrown (streams)");
 			e.printStackTrace();
@@ -64,8 +58,8 @@ public class GameEngineServerStub {
 		// Loop to handle multiple requests from client
 		while (!socket.isClosed()) {
 			try {
-				GameOperation op = (GameOperation) this.responseStream.readObject();
-				op.execute(this, requestStream);
+				GameOperation op = (GameOperation) this.requestStream.readObject();
+				op.execute(this, responseStream);
 				System.out.println("Operation executed: " + op.toString());
 			}
 			catch (ClassCastException | ClassNotFoundException e) {

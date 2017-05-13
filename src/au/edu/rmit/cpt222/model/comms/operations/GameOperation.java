@@ -6,5 +6,5 @@ import au.edu.rmit.cpt222.model.comms.GameEngineServerStub;
 
 public interface GameOperation {
 		
-	public void execute(GameEngineServerStub serverStub, ObjectOutputStream requestStream);
+	public void execute(GameEngineServerStub serverStub, ObjectOutputStream responseStream);
 }

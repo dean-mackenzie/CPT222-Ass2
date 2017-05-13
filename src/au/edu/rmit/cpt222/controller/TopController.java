@@ -41,14 +41,14 @@ public class TopController implements ActionListener {
 			}
 		}
 		else if (e.getActionCommand().equals(TopToolBar.ADDPLAYER_TEXT)) {
-			// If 1 player exists, don't allow more (for Assignment 1)
-			if (this.ttb.getMainWindow().getMainController().getNumberPlayers() == 1) {
-				this.ttb.disableAddPlayerButton();
-				this.ttb.getMainWindow().displayWarning("Only 1 player can be created.");
-			}
-			else {
-				this.addPlayer();
-			}
+//			TODO: if you have time, work out how to handle 1 player per client
+//			if (this.ttb.getMainWindow().getMainController().getNumberPlayers() == 1) {
+//				this.ttb.disableAddPlayerButton();
+//				this.ttb.getMainWindow().displayWarning("Only 1 player can be created.");
+//			}
+//			else {
+			this.addPlayer();
+//			}
 		}
 		else if (e.getActionCommand().equals(TopToolBar.RESET_TEXT)) {
 			// Reset = remove players and update UI
