@@ -55,8 +55,4 @@ public class GameEngineCallbackImpl implements GameEngineCallback {
 			+ ", Dice 2: " + result.getDice2().getFace()  
 			+  " ... Total: " + result.getTotalScore());
 	}
-	
-	public void test() {
-		
-	}
 }
