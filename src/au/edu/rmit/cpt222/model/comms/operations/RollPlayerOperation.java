@@ -29,6 +29,7 @@ public class RollPlayerOperation extends AbstractGameOperation {
 				this.player, this.initialDelay, this.finalDelay, this.delayIncrement);
 		try {
 			// rollPlayer() returns nothing, so just do a simple write back
+			requestStream.reset();
 			requestStream.writeObject(true);
 					
 		} catch (IOException e) {

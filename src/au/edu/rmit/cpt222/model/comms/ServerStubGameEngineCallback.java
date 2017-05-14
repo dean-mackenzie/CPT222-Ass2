@@ -1,13 +1,15 @@
 package au.edu.rmit.cpt222.model.comms;
 
 import java.io.IOException;
-import java.io.NotSerializableException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
+import au.edu.rmit.cpt222.model.comms.callback.operations.GameResultOperation;
+import au.edu.rmit.cpt222.model.comms.callback.operations.HouseRollOperation;
 import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOperation;
 import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOutcomeOperation;
 import au.edu.rmit.cpt222.model.interfaces.DicePair;
@@ -16,7 +18,11 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 
-public class ServerStubGameEngineCallback implements GameEngineCallback, Serializable {
+public class ServerStubGameEngineCallback implements GameEngineCallback {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 92496294419844285L;
 	private ObjectOutputStream requestStream;
 	//private ObjectInputStream responseStream;
 	
@@ -32,9 +38,6 @@ public class ServerStubGameEngineCallback implements GameEngineCallback, Seriali
 					clientSocket.getOutputStream());
 			
 			System.out.println("CB connection accepted on " + clientSocket.getPort());
-			
-//			this.responseStream = new ObjectInputStream(
-//					clientSocket.getInputStream());
 
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -47,14 +50,29 @@ public class ServerStubGameEngineCallback implements GameEngineCallback, Seriali
 
 	@Override
 	public void gameResult(Player player, GameStatus result, GameEngine engine) {
-		// TODO Auto-generated method stub
+		System.out.println("Callback for game result...");		
+		// TODO: remove debug msg
+		try {
+			this.requestStream.writeObject(new GameResultOperation(
+					player, result));
+		} catch (IOException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
 
 	}
 
 	@Override
 	public void houseRoll(DicePair dicePair, GameEngine engine) {
-		// TODO Auto-generated method stub
-
+		System.out.println("Callback for house roll...");		
+		// TODO: remove debug msg
+		try {
+			this.requestStream.writeObject(new HouseRollOperation(
+					dicePair));
+		} catch (IOException e) {
+			e.getMessage();
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -69,7 +87,7 @@ public class ServerStubGameEngineCallback implements GameEngineCallback, Seriali
 		// TODO: remove debug msg
 		try {
 			this.requestStream.writeObject(new PlayerRollOperation(
-					player, dicePair, engine));
+					player, dicePair));
 		} catch (IOException e) {
 			e.getMessage();
 			e.printStackTrace();
@@ -82,10 +100,8 @@ public class ServerStubGameEngineCallback implements GameEngineCallback, Seriali
 		// TODO: remove debug msg
 		try {
 			// TODO: Check is for debug only
-			boolean bob = (new PlayerRollOutcomeOperation(
-					player, result, engine) instanceof Serializable);
 			this.requestStream.writeObject(new PlayerRollOutcomeOperation(
-					player, result, engine));
+					player, result));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,5 +1,6 @@
 package au.edu.rmit.cpt222.model;
 
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -9,7 +10,12 @@ import au.edu.rmit.cpt222.model.interfaces.Player;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
 
-public class GameEngineCallbackImpl implements GameEngineCallback {
+public class GameEngineCallbackImpl implements GameEngineCallback, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3793366151357505835L;
+
 	private DicePair result;
 
 	protected Logger logger = Logger.getLogger("Test");

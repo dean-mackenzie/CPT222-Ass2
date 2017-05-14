@@ -11,21 +11,35 @@ public class PlayerRollOutcomeOperation implements CallbackOperation, Serializab
 	
 	private Player player;
 	private DicePair dicePair;
-	private GameEngine engine;
+	String methodName;
 
-	public PlayerRollOutcomeOperation(Player player, DicePair dicePair, GameEngine engine) {
+	public PlayerRollOutcomeOperation(Player player, DicePair dicePair) {
 		this.player = player;
 		this.dicePair = dicePair;
-		this.engine = engine;
+
+		this.methodName = "playerRollOutcome";
 	}
 	
 	@Override
 	public void execute(GameEngineCallback callback) {
-		callback.playerRollOutcome(player, dicePair, engine);
+		//callback.playerRollOutcome(player, dicePair, engine);
+		
 	}
 	
 	@Override
 	public String toString() {
 		return this.getClass().getName();
+	}
+	
+	public String getMethodName() {
+		return methodName;
+	}
+	
+	public Player getPlayer() {
+		return this.player;
+	}
+	
+	public DicePair getDicePair() {
+		return this.dicePair;
 	}
 }

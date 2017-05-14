@@ -13,6 +13,7 @@ public class GetAllPlayersOperation extends AbstractGameOperation {
 	public void execute(GameEngineServerStub serverStub, 
 			ObjectOutputStream requestStream) {
 		try {
+			requestStream.reset();
 			requestStream.writeObject(
 					serverStub.getEngine().getAllPlayers());
 		} catch (IOException e) {

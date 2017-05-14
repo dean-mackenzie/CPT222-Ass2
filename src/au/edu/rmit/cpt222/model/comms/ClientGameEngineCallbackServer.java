@@ -7,20 +7,31 @@ import java.net.Socket;
 import java.net.SocketException;
 
 import au.edu.rmit.cpt222.model.comms.callback.operations.CallbackOperation;
+import au.edu.rmit.cpt222.model.comms.callback.operations.GameResultOperation;
+import au.edu.rmit.cpt222.model.comms.callback.operations.HouseRollOperation;
+import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOperation;
+import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOutcomeOperation;
+import au.edu.rmit.cpt222.model.interfaces.DicePair;
 import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
+import au.edu.rmit.cpt222.model.interfaces.Player;
+import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 
 public class ClientGameEngineCallbackServer {
 
 	private GameEngineCallback callback;
 	private ObjectInputStream inputStream;
-	//private ObjectOutputStream outputStream;
 	private int socketPort = 0;	// capture dynamic port no. and send to server\
+	private GameEngineClientStub gameEngine;
 		
 	
 	public ClientGameEngineCallbackServer(GameEngineClientStub clientStub) {
-		this.callback = clientStub.getCallback();
+		this.gameEngine = clientStub;
 		this.startCallbackServer();
 	}
+	
+//	private GameEngine getClientStub() {
+//		return this.client;
+//	}
 	
 	private void startCallbackServer() {
 		// Do this in a separate thread, as this won't happen straight away
@@ -44,8 +55,6 @@ public class ClientGameEngineCallbackServer {
 					clientSocket = this.socket.accept();
 
 					// Don't need outputStream(?), executing operations to GUICallback
-//					ClientGameEngineCallbackServer.this.outputStream = 
-//							new ObjectOutputStream(clientSocket.getOutputStream());
 					ClientGameEngineCallbackServer.this.inputStream = 
 							new ObjectInputStream(clientSocket.getInputStream());
 					
@@ -54,9 +63,39 @@ public class ClientGameEngineCallbackServer {
 						try {
 							// This acts like server, executing callback methods
 							// Have to know which specific method to call
+							// pass back data like ArrayList - methodName (0), data(1), data(2)...
 							CallbackOperation op = 
 									(CallbackOperation) ClientGameEngineCallbackServer.this.inputStream.readObject();
-							op.execute(ClientGameEngineCallbackServer.this.callback);
+							//op.execute(ClientGameEngineCallbackServer.this.callback);
+							
+							try {
+								//TODO: put this into a separate method
+								callback = ClientGameEngineCallbackServer.this.gameEngine.getCallback();
+								if (op.getMethodName().equals("playerRoll")) {
+									Player player = ((PlayerRollOperation) op).getPlayer();
+									DicePair dicePair = ((PlayerRollOperation) op).getDicePair();
+									callback.playerRoll(player, dicePair, gameEngine);
+								}
+								if (op.getMethodName().equals("playerRollOutcome")) {
+									Player player = ((PlayerRollOutcomeOperation) op).getPlayer();
+									DicePair dicePair = ((PlayerRollOutcomeOperation) op).getDicePair();
+									callback.playerRollOutcome(player, dicePair, gameEngine);
+								}
+								if (op.getMethodName().equals("houseRoll")) {
+									DicePair dicePair = ((HouseRollOperation) op).getDicePair();
+									callback.houseRoll(dicePair, gameEngine);
+								}
+								if (op.getMethodName().equals("gameResult")) {
+									Player player = ((GameResultOperation) op).getPlayer();
+									GameStatus result = ((GameResultOperation) op).getResult();
+									callback.gameResult(player, result, gameEngine);
+								}
+								
+							} catch (Exception e) {
+								e.getMessage();
+								e.printStackTrace();
+							}
+							
 							System.out.println("Operation executed: " + op.toString());
 						}
 						catch (ClassCastException | ClassNotFoundException e) {

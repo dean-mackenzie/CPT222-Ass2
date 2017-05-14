@@ -12,15 +12,12 @@ import au.edu.rmit.cpt222.model.comms.operations.GameOperation;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine;
 
 public class GameEngineServerStub {
-	
-	// use GameEngineImpl to perform all game functions
+
 	private GameEngine engine = new GameEngineImpl();
-	
 	private ObjectOutputStream responseStream;
 	private ObjectInputStream requestStream;
 	
 	public GameEngineServerStub(int port) {
-		// Open server socket to wait for client connections
 		try {
 			ServerSocket serverSocket = new ServerSocket(port);
 
@@ -28,6 +25,7 @@ public class GameEngineServerStub {
 
 			// set to timeout: serverSocket.setSoTimeout(0);
 			
+			// Open server socket to wait for client connections
 			while (!serverSocket.isClosed()) {
 				new RequestTask (this, serverSocket.accept()).start();
 			}

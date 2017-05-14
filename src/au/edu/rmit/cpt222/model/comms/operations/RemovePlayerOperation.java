@@ -18,6 +18,7 @@ public class RemovePlayerOperation extends AbstractGameOperation {
 	public void execute(GameEngineServerStub serverStub, 
 			ObjectOutputStream requestStream) {
 		try {
+			requestStream.reset();
 			requestStream.writeObject(
 					serverStub.getEngine().removePlayer(player));
 		} catch (IOException e) {

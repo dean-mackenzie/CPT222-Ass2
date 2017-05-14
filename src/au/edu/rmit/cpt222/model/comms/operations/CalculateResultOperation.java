@@ -16,6 +16,7 @@ public class CalculateResultOperation extends AbstractGameOperation {
 		serverStub.getEngine().calculateResult();
 		try {
 			// calculateResult() returns nothing, so just do a simple write back
+			requestStream.reset();
 			requestStream.writeObject(true);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
