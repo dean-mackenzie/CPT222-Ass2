@@ -90,17 +90,16 @@ public class GameEngineImpl implements GameEngine {
 	
 	public void placeBet(Player player, int betPoints) 
 			throws InsufficientFundsException {
-		Player playerToBet = getPlayer(player.getPlayerId());
 		
 		//Check if enough points to bet, then place bet
-		if (betPoints > playerToBet.getPoints()) {
+		if (betPoints > player.getPoints()) {
 			throw new InsufficientFundsException();
 		}
 		else if (betPoints < 1) {
 			throw new IllegalArgumentException();
 		}
 		else {
-			playerToBet.placeBet(betPoints);
+			player.placeBet(betPoints);
 		}
 	}
 

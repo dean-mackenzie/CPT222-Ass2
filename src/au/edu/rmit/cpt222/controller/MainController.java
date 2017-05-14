@@ -44,7 +44,7 @@ public class MainController {
 		// but may be needed for Assignment 2
 		for (Player player : this.engine.getAllPlayers()) {
 			try {
-				player.placeBet(bet);
+				this.engine.placeBet(player, bet);
 				
 				new Thread() {
 					public void run() {

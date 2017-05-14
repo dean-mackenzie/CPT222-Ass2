@@ -12,6 +12,7 @@ import au.edu.rmit.cpt222.model.comms.operations.CalculateResultOperation;
 import au.edu.rmit.cpt222.model.comms.operations.RegisterCBOperation;
 import au.edu.rmit.cpt222.model.comms.operations.GetAllPlayersOperation;
 import au.edu.rmit.cpt222.model.comms.operations.GetPlayerOperation;
+import au.edu.rmit.cpt222.model.comms.operations.PlaceBetOperation;
 import au.edu.rmit.cpt222.model.comms.operations.RemovePlayerOperation;
 import au.edu.rmit.cpt222.model.comms.operations.RollPlayerOperation;
 import au.edu.rmit.cpt222.model.exceptions.InsufficientFundsException;
@@ -83,8 +84,7 @@ public class GameEngineClientStub implements GameEngine {
 		// TODO: remove debug msg
 		try {
 			this.requestStream.writeObject(new CalculateResultOperation());
-			this.responseStream.readObject();
-		} catch (IOException | ClassNotFoundException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -125,10 +125,16 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public void placeBet(Player player, int betPoints) throws InsufficientFundsException {
-		// TODO Auto-generated method stub
-		
-		// So even though this is void, you need to get data back to show exception was thrown
-
+		System.out.println("Placing bet...");		// TODO: remove debug msg
+		try {
+			this.requestStream.writeObject(new PlaceBetOperation(player, betPoints));
+			// Update the player on client side
+			player.placeBet(betPoints);
+			System.out.println("Bet: " + player.getBet());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void registerGECallbackServer(RegisterCBOperation op) {

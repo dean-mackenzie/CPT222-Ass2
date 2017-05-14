@@ -10,6 +10,7 @@ import java.util.List;
 
 import au.edu.rmit.cpt222.model.comms.callback.operations.GameResultOperation;
 import au.edu.rmit.cpt222.model.comms.callback.operations.HouseRollOperation;
+import au.edu.rmit.cpt222.model.comms.callback.operations.HouseRollOutcomeOperation;
 import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOperation;
 import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOutcomeOperation;
 import au.edu.rmit.cpt222.model.interfaces.DicePair;
@@ -77,7 +78,16 @@ public class ServerStubGameEngineCallback implements GameEngineCallback {
 
 	@Override
 	public void houseRollOutcome(DicePair result, GameEngine engine) {
-		// TODO Auto-generated method stub
+		System.out.println("Callback for house roll outcome...");		
+		// TODO: remove debug msg
+		try {
+			// TODO: Check is for debug only
+			this.requestStream.writeObject(new HouseRollOutcomeOperation(
+					result));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -106,7 +116,6 @@ public class ServerStubGameEngineCallback implements GameEngineCallback {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 }

@@ -2,11 +2,12 @@ package au.edu.rmit.cpt222.model.comms.operations;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import au.edu.rmit.cpt222.model.comms.GameEngineServerStub;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 
-public class AddPlayerOperation extends AbstractGameOperation {
+public class AddPlayerOperation extends AbstractGameOperation implements Serializable {
 	
 	private Player player;
 

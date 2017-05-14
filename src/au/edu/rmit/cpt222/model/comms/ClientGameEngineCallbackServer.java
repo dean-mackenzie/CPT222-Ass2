@@ -9,6 +9,7 @@ import java.net.SocketException;
 import au.edu.rmit.cpt222.model.comms.callback.operations.CallbackOperation;
 import au.edu.rmit.cpt222.model.comms.callback.operations.GameResultOperation;
 import au.edu.rmit.cpt222.model.comms.callback.operations.HouseRollOperation;
+import au.edu.rmit.cpt222.model.comms.callback.operations.HouseRollOutcomeOperation;
 import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOperation;
 import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOutcomeOperation;
 import au.edu.rmit.cpt222.model.interfaces.DicePair;
@@ -83,6 +84,10 @@ public class ClientGameEngineCallbackServer {
 								}
 								if (op.getMethodName().equals("houseRoll")) {
 									DicePair dicePair = ((HouseRollOperation) op).getDicePair();
+									callback.houseRoll(dicePair, gameEngine);
+								}
+								if (op.getMethodName().equals("houseRollOutcome")) {
+									DicePair dicePair = ((HouseRollOutcomeOperation) op).getDicePair();
 									callback.houseRoll(dicePair, gameEngine);
 								}
 								if (op.getMethodName().equals("gameResult")) {
