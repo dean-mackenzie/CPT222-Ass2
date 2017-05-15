@@ -18,7 +18,6 @@ public class GetPlayerOperation extends AbstractGameOperation {
 	public void execute(GameEngineServerStub serverStub, 
 			ObjectOutputStream requestStream) {
 		try {
-			requestStream.reset();
 			requestStream.writeObject(
 					serverStub.getEngine().getPlayer(playerId));
 		} catch (IOException e) {

@@ -12,6 +12,7 @@ public class CalculateResultOperation extends AbstractGameOperation implements S
 	@Override
 	public void execute(GameEngineServerStub serverStub, 
 			ObjectOutputStream requestStream) {
+		
 		// calculateResult() returns nothing
 		serverStub.getEngine().calculateResult();
 	}

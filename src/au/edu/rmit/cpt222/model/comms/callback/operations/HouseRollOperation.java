@@ -11,6 +11,7 @@ public class HouseRollOperation implements CallbackOperation, Serializable {
 	
 	private DicePair dicePair;
 	private String methodName;
+	private GameEngine engine;
 
 	public HouseRollOperation(DicePair dicePair) {
 		this.dicePair = dicePair;
@@ -18,8 +19,8 @@ public class HouseRollOperation implements CallbackOperation, Serializable {
 	}
 	
 	@Override
-	public void execute(GameEngineCallback callback) {
-		//callback.houseRoll(this.dicePair, this.engine);
+	public void execute(GameEngineCallback callback, GameEngine engine) {
+		callback.houseRoll(this.dicePair, this.engine);
 	}
 	
 	@Override

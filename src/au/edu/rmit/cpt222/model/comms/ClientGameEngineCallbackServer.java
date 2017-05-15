@@ -62,44 +62,10 @@ public class ClientGameEngineCallbackServer {
 					// Loop to handle multiple requests from client
 					while (!socket.isClosed()) {
 						try {
-							// This acts like server, executing callback methods
-							// Have to know which specific method to call
-							// pass back data like ArrayList - methodName (0), data(1), data(2)...
+							// Execute the callback operations sent from server
 							CallbackOperation op = 
 									(CallbackOperation) ClientGameEngineCallbackServer.this.inputStream.readObject();
-							//op.execute(ClientGameEngineCallbackServer.this.callback);
-							
-							try {
-								//TODO: put this into a separate method
-								callback = ClientGameEngineCallbackServer.this.gameEngine.getCallback();
-								if (op.getMethodName().equals("playerRoll")) {
-									Player player = ((PlayerRollOperation) op).getPlayer();
-									DicePair dicePair = ((PlayerRollOperation) op).getDicePair();
-									callback.playerRoll(player, dicePair, gameEngine);
-								}
-								if (op.getMethodName().equals("playerRollOutcome")) {
-									Player player = ((PlayerRollOutcomeOperation) op).getPlayer();
-									DicePair dicePair = ((PlayerRollOutcomeOperation) op).getDicePair();
-									callback.playerRollOutcome(player, dicePair, gameEngine);
-								}
-								if (op.getMethodName().equals("houseRoll")) {
-									DicePair dicePair = ((HouseRollOperation) op).getDicePair();
-									callback.houseRoll(dicePair, gameEngine);
-								}
-								if (op.getMethodName().equals("houseRollOutcome")) {
-									DicePair dicePair = ((HouseRollOutcomeOperation) op).getDicePair();
-									callback.houseRoll(dicePair, gameEngine);
-								}
-								if (op.getMethodName().equals("gameResult")) {
-									Player player = ((GameResultOperation) op).getPlayer();
-									GameStatus result = ((GameResultOperation) op).getResult();
-									callback.gameResult(player, result, gameEngine);
-								}
-								
-							} catch (Exception e) {
-								e.getMessage();
-								e.printStackTrace();
-							}
+							op.execute(ClientGameEngineCallbackServer.this.gameEngine.getCallback(), gameEngine);
 							
 							System.out.println("Operation executed: " + op.toString());
 						}

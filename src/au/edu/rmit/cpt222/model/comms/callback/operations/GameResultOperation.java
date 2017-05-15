@@ -2,6 +2,7 @@ package au.edu.rmit.cpt222.model.comms.callback.operations;
 
 import java.io.Serializable;
 
+import au.edu.rmit.cpt222.model.interfaces.GameEngine;
 import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
 import au.edu.rmit.cpt222.model.interfaces.Player;
@@ -11,6 +12,7 @@ public class GameResultOperation implements CallbackOperation, Serializable {
 	private Player player;
 	private GameStatus result;
 	private String methodName;
+	private GameEngine engine;
 
 
 	public GameResultOperation(Player player, GameStatus result) {
@@ -20,8 +22,8 @@ public class GameResultOperation implements CallbackOperation, Serializable {
 	}
 	
 	@Override
-	public void execute(GameEngineCallback callback) {
-		//callback.gameResult(this.player, this.result, this.engine);
+	public void execute(GameEngineCallback callback, GameEngine engine) {
+		callback.gameResult(this.player, this.result, engine);
 	}
 	
 	@Override

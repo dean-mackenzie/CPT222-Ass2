@@ -62,6 +62,7 @@ public class MainController {
 	}
 	
 	public boolean checkPlayerExists() {
+		//Collection boo = this.engine.getAllPlayers();		//TODO: debug only
 		if (this.engine.getAllPlayers().size() < 1) {
 			this.mw.displayWarning("Player must be added before playing.");
 			return false;

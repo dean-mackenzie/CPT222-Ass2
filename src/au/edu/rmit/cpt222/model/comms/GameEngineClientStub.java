@@ -21,8 +21,6 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 
 public class GameEngineClientStub implements GameEngine {
-
-	// this is effectively the controller (local version of model)
 	
 	private ObjectOutputStream requestStream;
 	private ObjectInputStream responseStream;
@@ -71,6 +69,7 @@ public class GameEngineClientStub implements GameEngine {
 	public void addPlayer(Player player) {
 		System.out.println("Adding player...");			// TODO: remove debug msg
 		try {
+			this.requestStream.reset();
 			this.requestStream.writeObject(new AddPlayerOperation(player));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -83,6 +82,7 @@ public class GameEngineClientStub implements GameEngine {
 		System.out.println("Calculating result/rolling for house...");		
 		// TODO: remove debug msg
 		try {
+			this.requestStream.reset();
 			this.requestStream.writeObject(new CalculateResultOperation());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -96,12 +96,13 @@ public class GameEngineClientStub implements GameEngine {
 		System.out.println("Getting players...");		// TODO: remove debug msg
 		Collection<Player> players = null;
 		try {
+			this.requestStream.reset();
 			this.requestStream.writeObject(new GetAllPlayersOperation());
 			players = (Collection<Player>) this.responseStream.readObject();
-		} catch (IOException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+		} catch (IOException | ClassNotFoundException | ClassCastException e) {
 			e.printStackTrace();
 		}
+		
 		return players;
 	}
 	
@@ -114,6 +115,7 @@ public class GameEngineClientStub implements GameEngine {
 		System.out.println("Getting player...");		// TODO: remove debug msg
 		Player player = null;
 		try {
+			this.requestStream.reset();
 			this.requestStream.writeObject(new GetPlayerOperation(id));
 			player = (Player) this.responseStream.readObject();
 		} catch (IOException | ClassNotFoundException e) {
@@ -127,10 +129,9 @@ public class GameEngineClientStub implements GameEngine {
 	public void placeBet(Player player, int betPoints) throws InsufficientFundsException {
 		System.out.println("Placing bet...");		// TODO: remove debug msg
 		try {
-			this.requestStream.writeObject(new PlaceBetOperation(player, betPoints));
-			// Update the player on client side
-			player.placeBet(betPoints);
-			System.out.println("Bet: " + player.getBet());
+			this.requestStream.reset();
+			this.requestStream.writeObject(new PlaceBetOperation(
+					this.getPlayer(player.getPlayerId()), betPoints));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -139,6 +140,7 @@ public class GameEngineClientStub implements GameEngine {
 	
 	public void registerGECallbackServer(RegisterCBOperation op) {
 		try {
+			this.requestStream.reset();
 			this.requestStream.writeObject(op);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -158,6 +160,7 @@ public class GameEngineClientStub implements GameEngine {
 		System.out.println("Removing player...");		// TODO: remove debug msg
 		boolean removed = false;
 		try {
+			this.requestStream.reset();
 			this.requestStream.writeObject(new RemovePlayerOperation(player));
 			removed = (boolean) this.responseStream.readObject();
 		} catch (IOException | ClassNotFoundException e) {
@@ -182,9 +185,9 @@ public class GameEngineClientStub implements GameEngine {
 		// TODO: remove debug msg
 		try {
 			this.requestStream.writeObject(new RollPlayerOperation(
-					player, initialDelay, finalDelay, delayIncrement));
-			this.responseStream.readObject();
-		} catch (IOException | ClassNotFoundException e) {
+					this.getPlayer(player.getPlayerId()), initialDelay, 
+					finalDelay, delayIncrement));
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

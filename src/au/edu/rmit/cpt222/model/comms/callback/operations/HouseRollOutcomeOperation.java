@@ -10,18 +10,18 @@ import au.edu.rmit.cpt222.model.interfaces.Player;
 public class HouseRollOutcomeOperation implements CallbackOperation, Serializable {
 	
 	private DicePair dicePair;
+	private GameEngine engine;
 	String methodName;
+	
 
 	public HouseRollOutcomeOperation(DicePair dicePair) {
 		this.dicePair = dicePair;
-
 		this.methodName = "houseRollOutcome";
 	}
 	
 	@Override
-	public void execute(GameEngineCallback callback) {
-		//callback.playerRollOutcome(player, dicePair, engine);
-		
+	public void execute(GameEngineCallback callback, GameEngine engine) {
+		callback.houseRollOutcome(dicePair, engine);
 	}
 	
 	@Override

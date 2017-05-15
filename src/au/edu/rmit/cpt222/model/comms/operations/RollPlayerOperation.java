@@ -1,6 +1,5 @@
 package au.edu.rmit.cpt222.model.comms.operations;
 
-import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import au.edu.rmit.cpt222.model.comms.GameEngineServerStub;
@@ -25,17 +24,10 @@ public class RollPlayerOperation extends AbstractGameOperation {
 	@Override
 	public void execute(GameEngineServerStub serverStub, 
 			ObjectOutputStream requestStream) {
+		//rollPlayer() is a void method
 		serverStub.getEngine().rollPlayer(
-				this.player, this.initialDelay, this.finalDelay, this.delayIncrement);
-		try {
-			// rollPlayer() returns nothing, so just do a simple write back
-			requestStream.reset();
-			requestStream.writeObject(true);
-					
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				this.player, this.initialDelay, 
+				this.finalDelay, this.delayIncrement);
 	}
 	
 	@Override

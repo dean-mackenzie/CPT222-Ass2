@@ -12,6 +12,7 @@ public class PlaceBetOperation extends AbstractGameOperation implements Serializ
 	
 	private Player player;
 	private int betPoints;
+	
 
 	public PlaceBetOperation(Player player, int betPoints) {
 		this.player = player;
@@ -22,17 +23,14 @@ public class PlaceBetOperation extends AbstractGameOperation implements Serializ
 	public void execute(GameEngineServerStub serverStub, 
 			ObjectOutputStream requestStream) {
 		try {
-			serverStub.getEngine().placeBet(this.player, this.betPoints);
+			serverStub.getEngine().placeBet(player, this.betPoints);
 			
 			// Return bet to client
-			requestStream.writeObject(
-					serverStub.getEngine().getPlayer(
-							player.getPlayerId()).getBet());
+//			requestStream.writeObject(
+//					serverStub.getEngine().getPlayer(
+//							player.getPlayerId()).getBet());
 		} catch (InsufficientFundsException e) {
 			; // TODO: handle exception
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	

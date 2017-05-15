@@ -11,6 +11,7 @@ public class PlayerRollOutcomeOperation implements CallbackOperation, Serializab
 	
 	private Player player;
 	private DicePair dicePair;
+	private GameEngine engine;
 	String methodName;
 
 	public PlayerRollOutcomeOperation(Player player, DicePair dicePair) {
@@ -21,9 +22,8 @@ public class PlayerRollOutcomeOperation implements CallbackOperation, Serializab
 	}
 	
 	@Override
-	public void execute(GameEngineCallback callback) {
-		//callback.playerRollOutcome(player, dicePair, engine);
-		
+	public void execute(GameEngineCallback callback, GameEngine engine) {
+		callback.playerRollOutcome(player, dicePair, engine);
 	}
 	
 	@Override

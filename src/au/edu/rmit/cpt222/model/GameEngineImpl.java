@@ -39,15 +39,15 @@ public class GameEngineImpl implements GameEngine {
 		//Looping for multiple players (not needed for Ass 1)
 		for (GameEngineCallback callback : callbacks) {
 			// Roll for house
-			rollHouse(INITIAL_DELAY, FINAL_DELAY, DELAY_INCREMENT);
+			this.rollHouse(INITIAL_DELAY, FINAL_DELAY, DELAY_INCREMENT);
 			
-			for (Player player : players.values()) {
+			for (Player player : this.players.values()) {
 				// Players who are playing must have a bet and a score
 				// This conditional may not be required in Assignment 2
 				if (player.getBet() > 0 && player.getRollResult()
 						.getTotalScore() > 0) {
 					// Compare rolls, set result and add/subtract points
-					if (houseDice.getTotalScore() > player.
+					if (this.houseDice.getTotalScore() > player.
 							getRollResult().getTotalScore()) {
 						GameStatus status = GameEngine.GameStatus.LOST;					
 						player.setGameResult(status);
@@ -81,25 +81,27 @@ public class GameEngineImpl implements GameEngine {
 
 	public Collection<Player> getAllPlayers() {
 		return Collections.unmodifiableCollection(new ArrayList<Player>(
-				players.values()));
+				this.players.values()));
 	}
 	
 	public Player getPlayer(String id) {
-		return players.get(id);
+		return this.players.get(id);
 	}
 	
 	public void placeBet(Player player, int betPoints) 
 			throws InsufficientFundsException {
-		
+
 		//Check if enough points to bet, then place bet
-		if (betPoints > player.getPoints()) {
+		if (betPoints > this.getPlayer(player.getPlayerId())
+				.getPoints()) {
 			throw new InsufficientFundsException();
 		}
 		else if (betPoints < 1) {
 			throw new IllegalArgumentException();
 		}
 		else {
-			player.placeBet(betPoints);
+			this.getPlayer(player.getPlayerId()).
+			placeBet(betPoints);
 		}
 	}
 
@@ -127,7 +129,7 @@ public class GameEngineImpl implements GameEngine {
 		for (GameEngineCallback callback : this.callbacks) {
 			for(int i = 0; i < FINAL_DELAY; i = i + DELAY_INCREMENT) {
 				// Handles GUI animation
-				houseDice = new DicePairImpl();
+				this.houseDice = new DicePairImpl();
 				callback.houseRoll(houseDice, this);
 				this.delayRoll(DELAY_INCREMENT);
 			}
@@ -146,9 +148,9 @@ public class GameEngineImpl implements GameEngine {
 		for (GameEngineCallback callback : this.callbacks) {
 			for(int i = 0; i <= FINAL_DELAY; i = i + DELAY_INCREMENT) {
 				// Sets roll and handles console / GUI callbacks
-				playerDice = new DicePairImpl();
+				this.playerDice = new DicePairImpl();
 				callback.playerRoll(player, playerDice, this);
-				player.setRollResult(playerDice);
+				this.getPlayer(player.getPlayerId()).setRollResult(playerDice);
 				this.delayRoll(DELAY_INCREMENT);
 			}
 			// Get final roll outcome
