@@ -43,7 +43,7 @@ public class GameEngineCallbackImpl implements GameEngineCallback, Serializable 
 	public void houseRollOutcome(DicePair result, GameEngine engine) {
 		// Log result
 		this.logger.log(Level.INFO, "Player: House, final roll state= Dice 1: "
-			+ result.getDice1().getFace() + ", Dice 2: " + this.result.getDice2().getFace()
+			+ result.getDice1().getFace() + ", Dice 2: " + result.getDice2().getFace()
 			+ " ... Total: " + result.getTotalScore());
 	}
 	

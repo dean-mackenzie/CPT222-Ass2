@@ -21,7 +21,7 @@ public class HouseRollOutcomeOperation implements CallbackOperation, Serializabl
 	
 	@Override
 	public void execute(GameEngineCallback callback, GameEngine engine) {
-		callback.houseRollOutcome(dicePair, engine);
+		callback.houseRollOutcome(this.dicePair, this.engine);
 	}
 	
 	@Override

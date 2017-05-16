@@ -31,14 +31,6 @@ public class GameResultOperation implements CallbackOperation, Serializable {
 		return this.getClass().getName();
 	}
 
-	public Player getPlayer() {
-		return player;
-	}
-
-	public GameStatus getResult() {
-		return result;
-	}
-
 	public String getMethodName() {
 		return methodName;
 	}

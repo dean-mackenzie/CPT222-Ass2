@@ -59,7 +59,6 @@ public class ServerStubGameEngineCallback implements GameEngineCallback {
 			e.getMessage();
 			e.printStackTrace();
 		}
-
 	}
 
 	@Override

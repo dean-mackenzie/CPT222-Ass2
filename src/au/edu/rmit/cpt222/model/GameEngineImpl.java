@@ -73,7 +73,8 @@ public class GameEngineImpl implements GameEngine {
 					}
 					
 					// Display result
-					callback.gameResult(player, player.getGameResult(), this);
+					callback.gameResult(this.getPlayer(player.getPlayerId()), 
+							this.getPlayer(player.getPlayerId()).getGameResult(), this);
 				}
 			}
 		}
@@ -169,6 +170,6 @@ public class GameEngineImpl implements GameEngine {
 	}
 	
 	public void setPlayerPoints(Player player, int totalPoints) {
-		player.setPoints(totalPoints);
+		this.getPlayer(player.getPlayerId()).setPoints(totalPoints);
 	}
 }

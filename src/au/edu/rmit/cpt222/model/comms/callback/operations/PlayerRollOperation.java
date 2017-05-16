@@ -8,17 +8,13 @@ import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
 import au.edu.rmit.cpt222.model.interfaces.Player;
 
 public class PlayerRollOperation implements CallbackOperation, Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4130548260943155511L;
+
 	private Player player;
 	private DicePair dicePair;
 	private GameEngine engine;
 	String methodName;
 
-	public PlayerRollOperation(Player player, DicePair dicePair) {//, GameEngine engine) {
+	public PlayerRollOperation(Player player, DicePair dicePair) {
 		this.player = player;
 		this.dicePair = dicePair;
 		methodName = "playerRoll";

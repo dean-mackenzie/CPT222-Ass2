@@ -30,10 +30,6 @@ public class ClientGameEngineCallbackServer {
 		this.startCallbackServer();
 	}
 	
-//	private GameEngine getClientStub() {
-//		return this.client;
-//	}
-	
 	private void startCallbackServer() {
 		// Do this in a separate thread, as this won't happen straight away
 		// and if it waits it blocks the app
