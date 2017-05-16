@@ -133,7 +133,7 @@ public class GameEngineImpl implements GameEngine {
 				callback.houseRoll(houseDice, this);
 				this.delayRoll(DELAY_INCREMENT);
 			}
-			callback.houseRollOutcome(houseDice, this);
+			callback.houseRollOutcome(this.houseDice, this);
 		}
 	}
 	
@@ -154,7 +154,8 @@ public class GameEngineImpl implements GameEngine {
 				this.delayRoll(DELAY_INCREMENT);
 			}
 			// Get final roll outcome
-			callback.playerRollOutcome(player, player.getRollResult(), this);
+			callback.playerRollOutcome(this.getPlayer(player.getPlayerId()),
+					this.getPlayer(player.getPlayerId()).getRollResult(), this);
 		}
 	}
 	

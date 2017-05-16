@@ -24,11 +24,6 @@ public class PlaceBetOperation extends AbstractGameOperation implements Serializ
 			ObjectOutputStream requestStream) {
 		try {
 			serverStub.getEngine().placeBet(player, this.betPoints);
-			
-			// Return bet to client
-//			requestStream.writeObject(
-//					serverStub.getEngine().getPlayer(
-//							player.getPlayerId()).getBet());
 		} catch (InsufficientFundsException e) {
 			; // TODO: handle exception
 		}

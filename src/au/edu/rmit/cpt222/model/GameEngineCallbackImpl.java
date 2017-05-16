@@ -27,12 +27,12 @@ public class GameEngineCallbackImpl implements GameEngineCallback, Serializable 
 	
 	// Returns house roll as a score
 	public int getHouseRoll() {
-		return result.getTotalScore();
+		return this.result.getTotalScore();
 	}
 
 	public void houseRoll(DicePair dicePair, GameEngine engine) {
 		// Set the result dice to parameter
-		result = dicePair;
+		this.result = dicePair;
 		
 		//Log intermediate roll
 		this.logger.log(Level.INFO, "Player: House, intermediate roll= Dice 1: " 
@@ -43,7 +43,7 @@ public class GameEngineCallbackImpl implements GameEngineCallback, Serializable 
 	public void houseRollOutcome(DicePair result, GameEngine engine) {
 		// Log result
 		this.logger.log(Level.INFO, "Player: House, final roll state= Dice 1: "
-			+ result.getDice1().getFace() + ", Dice 2: " + result.getDice2().getFace()
+			+ result.getDice1().getFace() + ", Dice 2: " + this.result.getDice2().getFace()
 			+ " ... Total: " + result.getTotalScore());
 	}
 	

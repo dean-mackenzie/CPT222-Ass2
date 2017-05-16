@@ -25,7 +25,6 @@ public class ServerStubGameEngineCallback implements GameEngineCallback {
 	 */
 	private static final long serialVersionUID = 92496294419844285L;
 	private ObjectOutputStream requestStream;
-	//private ObjectInputStream responseStream;
 	
 	public ServerStubGameEngineCallback(HostDetails details) {
 
@@ -55,7 +54,7 @@ public class ServerStubGameEngineCallback implements GameEngineCallback {
 		// TODO: remove debug msg
 		try {
 			this.requestStream.writeObject(new GameResultOperation(
-					player, result));
+					engine.getPlayer(player.getPlayerId()), result));
 		} catch (IOException e) {
 			e.getMessage();
 			e.printStackTrace();
@@ -97,7 +96,7 @@ public class ServerStubGameEngineCallback implements GameEngineCallback {
 		// TODO: remove debug msg
 		try {
 			this.requestStream.writeObject(new PlayerRollOperation(
-					player, dicePair));
+					engine.getPlayer(player.getPlayerId()), dicePair));
 		} catch (IOException e) {
 			e.getMessage();
 			e.printStackTrace();
@@ -111,7 +110,7 @@ public class ServerStubGameEngineCallback implements GameEngineCallback {
 		try {
 			// TODO: Check is for debug only
 			this.requestStream.writeObject(new PlayerRollOutcomeOperation(
-					player, result));
+					engine.getPlayer(player.getPlayerId()), result));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

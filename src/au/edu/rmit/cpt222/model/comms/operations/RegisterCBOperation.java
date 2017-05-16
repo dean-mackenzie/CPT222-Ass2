@@ -16,6 +16,5 @@ public class RegisterCBOperation extends AbstractGameOperation implements Serial
 	public void execute(GameEngineServerStub serverStub, ObjectOutputStream requestStream) {
 		serverStub.addGameEngineCallback(details);
 		// TODO: does this need to pass back a UNique ID?
-		
 	}
 }
