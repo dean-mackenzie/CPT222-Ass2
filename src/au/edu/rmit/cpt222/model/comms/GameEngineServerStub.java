@@ -3,6 +3,7 @@ package au.edu.rmit.cpt222.model.comms;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -30,13 +31,13 @@ public class GameEngineServerStub {
 			while (!serverSocket.isClosed()) {
 				new RequestTask (this, serverSocket.accept()).start();
 			}
-
-			// TODO: old code, delete once multi-threading working
-			//this.handleRequest(serverSocket.accept());
 			
+		} catch (BindException e) {
+			System.out.println("Could not initialise server. Is one already running?");
+			System.exit(0);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("Something went wrong");
+			System.out.println("Something IO-related occurred.");
 			e.printStackTrace();
 		}
 	}
