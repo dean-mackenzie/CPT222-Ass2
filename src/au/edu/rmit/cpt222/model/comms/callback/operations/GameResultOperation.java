@@ -11,14 +11,12 @@ public class GameResultOperation implements CallbackOperation, Serializable {
 	
 	private Player player;
 	private GameStatus result;
-	private String methodName;
 	private GameEngine engine;
 
 
 	public GameResultOperation(Player player, GameStatus result) {
 		this.player = player;
 		this.result = result;
-		this.methodName = "gameResult";
 	}
 	
 	@Override
@@ -29,9 +27,5 @@ public class GameResultOperation implements CallbackOperation, Serializable {
 	@Override
 	public String toString() {
 		return this.getClass().getName();
-	}
-
-	public String getMethodName() {
-		return methodName;
 	}
 }

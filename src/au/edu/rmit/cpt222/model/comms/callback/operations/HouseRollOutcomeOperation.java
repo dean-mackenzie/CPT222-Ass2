@@ -11,12 +11,9 @@ public class HouseRollOutcomeOperation implements CallbackOperation, Serializabl
 	
 	private DicePair dicePair;
 	private GameEngine engine;
-	String methodName;
 	
-
 	public HouseRollOutcomeOperation(DicePair dicePair) {
 		this.dicePair = dicePair;
-		this.methodName = "houseRollOutcome";
 	}
 	
 	@Override
@@ -27,13 +24,5 @@ public class HouseRollOutcomeOperation implements CallbackOperation, Serializabl
 	@Override
 	public String toString() {
 		return this.getClass().getName();
-	}
-	
-	public String getMethodName() {
-		return methodName;
-	}
-	
-	public DicePair getDicePair() {
-		return this.dicePair;
 	}
 }

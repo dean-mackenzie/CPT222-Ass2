@@ -7,15 +7,7 @@ import java.net.Socket;
 import java.net.SocketException;
 
 import au.edu.rmit.cpt222.model.comms.callback.operations.CallbackOperation;
-import au.edu.rmit.cpt222.model.comms.callback.operations.GameResultOperation;
-import au.edu.rmit.cpt222.model.comms.callback.operations.HouseRollOperation;
-import au.edu.rmit.cpt222.model.comms.callback.operations.HouseRollOutcomeOperation;
-import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOperation;
-import au.edu.rmit.cpt222.model.comms.callback.operations.PlayerRollOutcomeOperation;
-import au.edu.rmit.cpt222.model.interfaces.DicePair;
 import au.edu.rmit.cpt222.model.interfaces.GameEngineCallback;
-import au.edu.rmit.cpt222.model.interfaces.Player;
-import au.edu.rmit.cpt222.model.interfaces.GameEngine.GameStatus;
 
 public class ClientGameEngineCallbackServer {
 
@@ -61,7 +53,8 @@ public class ClientGameEngineCallbackServer {
 							// Execute the callback operations sent from server
 							CallbackOperation op = 
 									(CallbackOperation) ClientGameEngineCallbackServer.this.inputStream.readObject();
-							op.execute(ClientGameEngineCallbackServer.this.gameEngine.getCallback(), gameEngine);
+							op.execute(ClientGameEngineCallbackServer.this.gameEngine.getCallback(), 
+									ClientGameEngineCallbackServer.this.gameEngine);
 							
 							System.out.println("Operation executed: " + op.toString());
 						}

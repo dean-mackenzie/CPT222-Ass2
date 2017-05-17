@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.net.SocketException;
 
 import au.edu.rmit.cpt222.model.comms.operations.GameOperation;
 
@@ -41,6 +42,14 @@ public class RequestTask extends Thread
 				System.out.println("Operation executed: " + op.toString());
 			}
 
+		} catch (SocketException e) {
+			try {
+				clientSocket.close();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			System.out.println("Client connection closed");
 		} catch (IOException e) {
 			System.out.println("IOException thrown");
 			e.printStackTrace();

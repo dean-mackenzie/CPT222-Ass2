@@ -21,7 +21,8 @@ public class GameEngineServerStub {
 		try {
 			ServerSocket serverSocket = new ServerSocket(port);
 
-			System.out.println("Server on " + serverSocket.getLocalPort() + " / " + serverSocket.getLocalSocketAddress() + " waiting");
+			System.out.println("Server on " + serverSocket.getLocalPort() + 
+					" / " + serverSocket.getLocalSocketAddress() + " waiting");
 
 			// set to timeout: serverSocket.setSoTimeout(0);
 			

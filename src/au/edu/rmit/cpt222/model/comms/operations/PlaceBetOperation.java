@@ -1,5 +1,6 @@
 package au.edu.rmit.cpt222.model.comms.operations;
 
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
@@ -24,9 +25,19 @@ public class PlaceBetOperation extends AbstractGameOperation implements Serializ
 			ObjectOutputStream requestStream) {
 		try {
 			serverStub.getEngine().placeBet(player, this.betPoints);
+			try {
+				requestStream.writeObject(false);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (InsufficientFundsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				requestStream.writeObject(true);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 	

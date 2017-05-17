@@ -63,6 +63,7 @@ public class TopController implements ActionListener {
 	public void close() {
 		ttb.getMainWindow().setVisible(false);
 		ttb.getMainWindow().dispose();
+		System.exit(0);
 	}
 
 	// This controls UI interaction only

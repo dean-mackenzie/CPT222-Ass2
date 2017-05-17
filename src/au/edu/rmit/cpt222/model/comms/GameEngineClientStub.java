@@ -67,7 +67,6 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public void addPlayer(Player player) {
-		System.out.println("Adding player...");			// TODO: remove debug msg
 		try {
 			this.requestStream.reset();
 			this.requestStream.writeObject(new AddPlayerOperation(player));
@@ -79,11 +78,10 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public void calculateResult() {
-		System.out.println("Calculating result/rolling for house...");		
-		// TODO: remove debug msg
 		try {
 			this.requestStream.reset();
 			this.requestStream.writeObject(new CalculateResultOperation());
+			//this.responseStream.readObject
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -93,7 +91,6 @@ public class GameEngineClientStub implements GameEngine {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<Player> getAllPlayers() {
-		System.out.println("Getting players...");		// TODO: remove debug msg
 		Collection<Player> players = null;
 		try {
 			this.requestStream.reset();
@@ -112,7 +109,6 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public Player getPlayer(String id) {
-		System.out.println("Getting player...");		// TODO: remove debug msg
 		Player player = null;
 		try {
 			this.requestStream.reset();
@@ -127,12 +123,16 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public void placeBet(Player player, int betPoints) throws InsufficientFundsException {
-		System.out.println("Placing bet...");		// TODO: remove debug msg
 		try {
 			this.requestStream.reset();
 			this.requestStream.writeObject(new PlaceBetOperation(
 					this.getPlayer(player.getPlayerId()), betPoints));
-		} catch (IOException e) {
+			
+			Boolean insufficientFunds = (Boolean) this.responseStream.readObject();
+			if (insufficientFunds) {
+				throw new InsufficientFundsException();
+			}
+		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -157,7 +157,6 @@ public class GameEngineClientStub implements GameEngine {
 
 	@Override
 	public boolean removePlayer(Player player) {
-		System.out.println("Removing player...");		// TODO: remove debug msg
 		boolean removed = false;
 		try {
 			this.requestStream.reset();
@@ -181,7 +180,7 @@ public class GameEngineClientStub implements GameEngine {
 	@Override
 	public void rollPlayer(Player player, int initialDelay, 
 			int finalDelay, int delayIncrement) {
-		System.out.println("Rolling for players...");		
+	
 		// TODO: remove debug msg
 		try {
 			this.requestStream.writeObject(new RollPlayerOperation(

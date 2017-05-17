@@ -54,7 +54,7 @@ public class ServerStubGameEngineCallback implements GameEngineCallback {
 		// TODO: remove debug msg
 		try {
 			this.requestStream.writeObject(new GameResultOperation(
-					engine.getPlayer(player.getPlayerId()), result));
+					player, result));
 		} catch (IOException e) {
 			e.getMessage();
 			e.printStackTrace();

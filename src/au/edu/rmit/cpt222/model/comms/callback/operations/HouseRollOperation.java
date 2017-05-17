@@ -10,12 +10,10 @@ import au.edu.rmit.cpt222.model.interfaces.Player;
 public class HouseRollOperation implements CallbackOperation, Serializable {
 	
 	private DicePair dicePair;
-	private String methodName;
 	private GameEngine engine;
 
 	public HouseRollOperation(DicePair dicePair) {
 		this.dicePair = dicePair;
-		this.methodName = "houseRoll";
 	}
 	
 	@Override
@@ -26,13 +24,5 @@ public class HouseRollOperation implements CallbackOperation, Serializable {
 	@Override
 	public String toString() {
 		return this.getClass().getName();
-	}
-	
-	public String getMethodName() {
-		return methodName;
-	}
-	
-	public DicePair getDicePair() {
-		return this.dicePair;
 	}
 }

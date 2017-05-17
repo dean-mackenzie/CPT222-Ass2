@@ -12,30 +12,15 @@ public class PlayerRollOperation implements CallbackOperation, Serializable {
 	private Player player;
 	private DicePair dicePair;
 	private GameEngine engine;
-	String methodName;
 
 	public PlayerRollOperation(Player player, DicePair dicePair) {
 		this.player = player;
 		this.dicePair = dicePair;
-		methodName = "playerRoll";
 	}
 	
 	@Override
 	public void execute(GameEngineCallback callback, GameEngine engine) {
-		
 		callback.playerRoll(player, dicePair, engine);
-	}
-	
-	public String getMethodName() {
-		return methodName;
-	}
-	
-	public Player getPlayer() {
-		return this.player;
-	}
-	
-	public DicePair getDicePair() {
-		return this.dicePair;
 	}
 	
 	@Override
